@@ -1,5 +1,7 @@
 # harvardCS50x Final Project
 
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/QJqorLvhCNI/0.jpg)](https://www.youtube.com/watch?v=QJqorLvhCNI)
+
 # Registering new users (register.html)
 I made a point of implementing a series of validations with java script that allow the user to receive real-time feedback on any possible problem with the registration, even before submitting it. The experience uses colors and alerts to ensure the visibility of information, always seeking to maximize the experience the user would have during registration.
 
