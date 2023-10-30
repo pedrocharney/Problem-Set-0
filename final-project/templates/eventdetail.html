@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Event Detail
+{% endblock %}
+
+{% block main %}
+
+    <h3>Event Detail</h3>
+
+    <div class="container py-2 text-center">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="text-center">Date</th>
+                    <th>Week Day</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Name</th>
+                    <th>Volunteers</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id='{{ event.event_id }}'>
+                    <td>{{ event.date_ }}</td>
+                    <td>{{ event.weekday }}</td>
+                    <td>{{ event.start_ }}</td>
+                    <td>{{ event.end_ }}</td>
+                    <td>{{ event.name }}</td>
+                    <td>{{ eventCount.count }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3>List of volunteers</h3>
+
+    <div class="container py-2">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>E-mail</th>
+                    <th>Function</th>
+                    <th>Volunteer status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for volunteer in volunteers %}
+                    <tr>
+                        <td>{{volunteer.name}}</td>
+                        <td>{{volunteer.username}}</td>
+                        <td>{{volunteer.role}}</td>
+                        {% if volunteer.deleted == 0 %}
+                            <td>✔️ confirmed</td>
+                        {% else %}
+                            <td>❌ not confirmed</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+
+{% endblock %}

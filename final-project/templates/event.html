@@ -1,0 +1,91 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Event
+{% endblock %}
+
+{% block main %}
+
+
+<div class="container">
+    <h3>Create a new event</h3>
+    <div class="row">
+        <form class="input-container" align-items="center" name="event" action="/event" method="post">
+            <div class="col-sm">
+                <label for="cultname">Choose a cult</label>
+                <select class="form-select" required name="cultname">
+                    <option disabled selected>Select Cult Name</option>
+                    <option value="arena">Arena</option>
+                    <option value="Culto da Família manhã">Culto da Família manhã</option>
+                    <option value="Culto da Família noite">Culto da Família noite</option>
+                    <option value="Culto de Milagres">Culto de Milagres</option>
+                </select>
+            </div>
+            <div class="col-sm">
+                <label for="date">Select the day:</label>
+                <input autocomplete="off" required class="form-control mx-auto w-auto" id="date" name="date" type="date">
+            </div>
+            <div class="col-sm">
+                <label for="time_start">Select the start Time</label>
+                <input autocomplete="off" required class="form-control mx-auto w-auto" id="time_start" name="time_start" placeholder="time_start" type="time">
+            </div>
+            <div class="col-sm">
+                <label for="time_end">Select the finish Time:</label>
+                <input autocomplete="off" required class="form-control mx-auto w-auto" id="time_end" name="time_end" placeholder="time_end" type="time">
+            </div>
+            <div class="col-sm">
+                <br>
+                <button class="btn btn-primary" type="submit">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
+<br>
+
+    <hr size="3" color="gray">
+
+    <h3>Event list</h3>
+
+    <div class="container py-2 text-center">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="text-center">Date</th>
+                    <th>Week Day</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Name</th>
+                    <th>volunteer</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if events %}
+                    {% for event in events %}
+                        <tr id='{{ event.event_id }}'>
+                            <td>{{ event.date }}</td>
+                            <td>{{ event.weekday }}</td>
+                            <td>{{ event.start }}</td>
+                            <td>{{ event.end }}</td>
+                            <td>{{ event.name }}</td>
+                            <td>{{ event.volunteer[0].count }}</td>
+                            <td>
+                                <form action="/deleteEvent" method="post">
+                                    <input name="event_id" type="hidden" value="{{ event.event_id }}">
+                                    <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form action="/eventdetail?event={{ event.event_id }}" method="get">
+                                    <input name="event" type="hidden" value="{{ event.event_id }}">
+                                    <button class="btn btn-primary btn-sm" type="submit">Detail</button>
+                                </form>
+                            </td>
+
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

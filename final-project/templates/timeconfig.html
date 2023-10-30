@@ -1,0 +1,100 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Time Configuration
+{% endblock %}
+
+{% block main %}
+
+    <div class="container">
+        <h3>User info</h3>
+        <br>
+        <div class="row">
+            <div class="col-1">
+                <strong>Id: </strong>{{ user.user_id }}
+            </div>
+            <div class="col-sm">
+                <strong>Name: </strong>{{ user.name }}
+            </div>
+            <div class="col-sm">
+                <strong>Email: </strong>{{ user.email }}
+            </div>
+            <div class="col-sm">
+                <strong>Function: </strong>{{ user.function }}
+            </div>
+            <div class="col-2">
+                <strong>Status: </strong>{{ user.status }}
+            </div>
+        </div>
+    </div>
+    <br>
+    <hr size="3" color="gray">
+
+<div class="container-fluid">
+    <h3>Configure Your Availability</h3>
+    <h5>Avaiable Days Info</h5>
+    <form class="input-container" style="justify-content: space-evenly; flex-direction: column;" name="avaiability" action="/timeconfig" method="post">
+        <br>
+        <div class="row">
+            <div class="col-sm">
+                <div class="form-check-inline">
+                    {% for week in weekdata %}
+                        <input id="{{week.weekname}}" name="{{week.weekname}}" type="checkbox" class="form-check-input" {{ "CHECKED" if week.status }}>&nbsp {{week.weekname}}
+                        <span> &nbsp &nbsp </span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-sm">
+            <br>
+            <button class="btn btn-primary" type="submit">save</button>
+        </div>
+    </form>
+</div>
+
+<br>
+<h5>Exceptions</h5>
+<br>
+<form class="form-inline" name="exceptions" action="/exception" method="post">
+    <div class="container" style="align-items: center">
+        <div class="row">
+            <div class="col-4">
+                To include a exception, you must provide the day and optionaly a reason
+            </div>
+            <div class="col-2">
+                <input autocomplete="off" required class="form-control mx-auto w-auto" id="exception_date" name="exception_date" type="date">
+            </div>
+            <div class="col-4">
+                <input autocomplete="off" class="form-control" id="reason" name="reason" placeholder="submit the reason (optional)" type="text">
+            </div>
+            <div class="col-2">
+                <button class="btn btn-primary" type="submit">include +</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="container py-2 text-center">
+    <table class="table">
+        <thead>
+            <th>Date</th>
+            <th>Reason</th>
+        </thead>
+        <tbody>
+            {% for exception in exceptions %}
+            <tr>
+                <td> {{ exception.date_ }} </td>
+                <td> {{ exception.reason }} </td>
+                <td>
+                    <form action="/deleteException" method="post">
+                        <input name="exception_id" type="hidden" value="{{ exception.exception_id }}">
+                        <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

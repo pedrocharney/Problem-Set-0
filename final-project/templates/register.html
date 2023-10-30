@@ -1,0 +1,115 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <p><strong>Register</strong></p>
+                <form name="register" action="/register" method="post" onsubmit="return validatePassword()">
+                    <div class="mb-3">
+                        <input autocomplete="off" autofocus required class="form-control mx-auto w-auto" id="name" name="name" placeholder="full name" type="text" size=40>
+                    </div>
+                    <div class="mb-3">
+                        <input autocomplete="off" required class="form-control mx-auto w-auto" id="email" name="email" placeholder="email" type="text" onfocusout="validateEmail()" size=40>
+                        <span id="emailerrormsg"></span>
+                    </div>
+                    <div class="mb-3">
+                        <input autocomplete="off" required class="form-control mx-auto w-auto" id="password" name="password" placeholder="password" type="password" size=40>
+                        <span id="message1">Password is <span id="strength"></span></span>
+                    </div>
+                    <div class="mb-3">
+                        <input autocomplete="off" required class="form-control mx-auto w-auto" id="password_" name="password_" placeholder="repeat password" type="password" size=40>
+                        <span id="message2">Passwords don`t match</span>
+                    </div>
+                    <div class="mb-3">
+                        <button class="btn btn-primary" type="submit">Register</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm">
+                <p><strong>Information</strong></p>
+                <p>By registering you will be part of the church's volunteer member database.</p>
+                <p>After registering, you must log in and configure your time availability.</p>
+                <p>The registered password will be recorded in the database using encryption, but avoid entering the same password you use in other services such as email or banking</p>
+                <p>If you have any additional question, please e-mail me at pedrocharney@gmail.com</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        function validatePassword() {
+            var password1 = document.getElementById("password").value;
+            var password2 = document.getElementById("password_").value;
+
+            if (password1 !== password2) {
+                alert("Passwords do not match. Please try again.");
+                return false; // Prevent form submission
+            }
+
+            return true; // Allow form submission
+        }
+
+
+            var pass = document.getElementById("password");
+            var msg = document.getElementById("message1");
+            var str = document.getElementById("strength");
+
+            pass.addEventListener('input',() => {
+                if(pass.value.length > 0){
+                    msg.style.display = "block";
+                }
+                else{
+                    msg.style.display = "none";
+                }
+                if(pass.value.length < 4){
+                    str.innerHTML = "week";
+                    msg.style.color = "red";
+                }
+                else if(pass.value.length >=4 && pass.value.length < 8 ){
+                    str.innerHTML = "medium";
+                    msg.style.color = "orange";
+                }
+                else if(pass.value.length >8){
+                    str.innerHTML = "strong";
+                    msg.style.color = "green";
+                }
+            })
+
+
+            var pass_ = document.getElementById("password_");
+            var msg_ = document.getElementById("message2");
+
+            pass_.addEventListener('input',() => {
+                if(pass.value === pass_.value){
+                    msg_.style.display = "none";
+                }
+                else{
+                    msg_.style.display = "block";
+                }
+
+            })
+
+            function validateEmail() {
+
+                var emailfield = document.getElementById("email");
+                var errormsg = document.getElementById("emailerrormsg");
+
+                if(!emailfield.value.match(/^[A-Za-z\._\-0-9]*[@][A-Za-z]*[\.][a-z]{2,4}$/)){
+                    errormsg.innerHTML = "Invalid e-mail";
+                    errormsg.style.display = "block";
+                    errormsg.style.color = "red";
+                }
+                else{
+                    errormsg.style.display = "none";
+                }
+            }
+
+    </script>
+
+{% endblock %}
